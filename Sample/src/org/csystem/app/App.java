@@ -1,6 +1,7 @@
 package org.csystem.app;
 
 import org.csystem.util.array.ArrayUtil;
+import static org.csystem.util.array.ArrayUtil.*;
 
 import java.util.Random;
 import java.util.Scanner;
@@ -8,34 +9,30 @@ import java.util.Scanner;
 class App {
     public static void main(String [] args)
     {
-        PartitionTest.run();
+        getHistogramTest.run();
     }
 }
 
-class PartitionTest {
+class getHistogramTest {
     public static void run()
     {
         Scanner kb = new Scanner(System.in);
         Random r = new Random();
 
         for (;;) {
-            System.out.print("Bir sayı giriniz:");
+            System.out.print("Dizinin eleman sayısını giriniz:");
             int count = Integer.parseInt(kb.nextLine());
 
             if (count <= 0)
                 break;
+            System.out.print("Hangi değere kadar Histogram elde etmek istediğinizi giriniz:");
+            int n = Integer.parseInt(kb.nextLine());
 
-            System.out.print("Eşik değerini giriniz:");
-            int threshold = Integer.parseInt(kb.nextLine());
+            int[] arr = ArrayUtil.getRandomArray(r, count, 0, 15);
+            print(2, arr);
+            int[] historgramArray = getHistogramData(arr, n);
+            print(2, historgramArray);
 
-            int [] a = ArrayUtil.getRandomArray(r, count, 0, 99);
-            System.out.println("---------------------------------------------------------");
-            ArrayUtil.print(2, a);
-            int partitionPoint = ArrayUtil.partition(a, threshold);
-
-            System.out.printf("Bölümleme Noktası:%d%n", partitionPoint);
-            ArrayUtil.print(2, a);
-            System.out.println("---------------------------------------------------------");
         }
 
         System.out.println("Tekrar yapıyor musunuz?");

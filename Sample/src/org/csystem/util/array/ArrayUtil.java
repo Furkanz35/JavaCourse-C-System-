@@ -18,6 +18,15 @@ public class ArrayUtil {
 
         return a;
     }
+
+    public static int findMax(int[] arr) {
+        int max = arr[0];
+        for(int i = 1; i < arr.length; ++i) {
+            if(arr[i] > max)
+                max = arr[i];
+        }
+        return  max;
+    }
     public static void print(int n, int [] a)
     {
         String fmt = String.format("%%0%dd ", n);
@@ -186,5 +195,15 @@ public class ArrayUtil {
         return partitionIndex;
     }
 
+    public static int[] getHistogramData(int[] arr, int n) {
+        int[] histogramArr = new int[n+1];
+        for(int i = 0; i < arr.length; ++i){
+            ++histogramArr[arr[i]];
+        }
+        return histogramArr;
+    }
+    public static int[] getHistogramData(int[] arr) {
+        return getHistogramData(arr,findMax(arr) );
+    }
 
 }
