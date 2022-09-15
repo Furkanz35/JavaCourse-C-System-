@@ -1,40 +1,45 @@
 package org.csystem.app;
-
-import org.csystem.util.array.ArrayUtil;
-import static org.csystem.util.array.ArrayUtil.*;
-
 import java.util.Random;
 import java.util.Scanner;
+import org.csystem.util.array.ArrayUtil;
+import org.csystem.util.string.StringUtil;
+
+import static java.util.Arrays.sort;
 
 class App {
+
     public static void main(String [] args)
     {
-        getHistogramTest.run();
+        JoinTest.run();
     }
+
+
 }
 
-class getHistogramTest {
+class JoinTest {
+
     public static void run()
-    {
-        Scanner kb = new Scanner(System.in);
+    {   Scanner inp = new Scanner(System.in);
         Random r = new Random();
-
-        for (;;) {
-            System.out.print("Dizinin eleman sayısını giriniz:");
-            int count = Integer.parseInt(kb.nextLine());
-
-            if (count <= 0)
+        for(;;) {
+            System.out.println("Lütfen string adedini giriniz:");
+            int n = Integer.parseInt(inp.nextLine());
+            System.out.println("Lütfen bir ayıraç giriniz");
+            char ch = inp.nextLine().charAt(0);
+            if(n <= 0)
                 break;
-            System.out.print("Hangi değere kadar Histogram elde etmek istediğinizi giriniz:");
-            int n = Integer.parseInt(kb.nextLine());
 
-            int[] arr = ArrayUtil.getRandomArray(r, count, 0, 15);
-            print(2, arr);
-            int[] historgramArray = getHistogramData(arr, n);
-            print(2, historgramArray);
+            String [] str = new String[n];
+            for(int i = 0; i < str.length; ++i) {
+                str[i] = StringUtil.getRandomTurkishWord();
+                System.out.println(str[i]);
+            }
+            System.out.println("---------------------------------");
+
+            System.out.println(StringUtil.join(str, ch));
+
 
         }
-
-        System.out.println("Tekrar yapıyor musunuz?");
     }
+
 }
