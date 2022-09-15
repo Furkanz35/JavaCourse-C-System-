@@ -16,16 +16,21 @@ public class StringUtil {
 
         return new String(str);
 
+
     }
 
-    public static String join(String [] strArray, char ch)
+    public static String join(String [] strArray, String str)
     {
         String joinedString = "";
         for (int i = 0; i < strArray.length; ++i)
         {
-            joinedString += strArray[i] + ch;
+            joinedString += strArray[i] + str;
         }
-        return joinedString;
+        return joinedString.substring(0,joinedString.length() - 1);
+    }
+    public static String join(String [] strArray, char ch)
+    {
+      return join(strArray, String.valueOf(ch));
     }
 
 }

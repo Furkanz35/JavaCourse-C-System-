@@ -24,10 +24,10 @@ class JoinTest {
         for(;;) {
             System.out.println("Lütfen string adedini giriniz:");
             int n = Integer.parseInt(inp.nextLine());
-            System.out.println("Lütfen bir ayıraç giriniz");
-            char ch = inp.nextLine().charAt(0);
             if(n <= 0)
                 break;
+            System.out.println("Lütfen bir ayıraç giriniz");
+            String ch = inp.nextLine();
 
             String [] str = new String[n];
             for(int i = 0; i < str.length; ++i) {
