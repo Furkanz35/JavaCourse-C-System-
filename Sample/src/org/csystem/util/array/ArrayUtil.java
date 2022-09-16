@@ -59,6 +59,21 @@ public class ArrayUtil {
             print(n, array);
     }
 
+    public static int [][] getRandomMatrix(Random r, int m, int n, int min, int max)
+    {
+        int [][] a = new int[m][];
+        for(int i = 0; i < m; ++i)
+           a[i] = getRandomArray(r, n, min, max);
+        return a;
+    }
+
+    public static int [][] getRandomSquareMatrix(Random r, int m, int min, int max)
+    {
+        return getRandomMatrix(r, m, m, min, max);
+    }
+
+
+
     public static int[] getDigits (long val) {
 
         int [] array = new int[getDigitCount(val)];
@@ -205,5 +220,49 @@ public class ArrayUtil {
     public static int[] getHistogramData(int[] arr) {
         return getHistogramData(arr,findMax(arr) );
     }
+
+    public static boolean isMatrix(int [][] a) {
+        int columnCount = a[0].length;
+        for(int i = 0; i < a.length; ++i){
+            if ( a[i].length != columnCount)
+                return false;
+        }
+        return true;
+
+    }
+    public static boolean isSquareMatrix(int [][] a)
+    {
+        return !isMatrix(a) ? false : (a.length == a[0].length ?  true : false);
+    }
+
+    public static int sumDioganal(int [][] a)
+    {
+        int result = 0;
+
+        for(int i = 0; i < a.length; ++i) {
+
+            result += a[i][i];
+
+        }
+        return result;
+    }
+
+    public static int sumOfArray(int [] arr)
+    {
+        int result = 0;
+        for (int i = 0; i < arr.length; ++i)
+            result += arr[i];
+        return result;
+    }
+
+    public static int sumOfArray(int [][] arr)
+    {
+        int result = 0;
+        for (int i = 0; i < arr.length; ++i)
+            result += sumOfArray(arr[i]);
+        return result;
+    }
+
+
 
 }
