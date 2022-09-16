@@ -26,7 +26,7 @@ public class StringUtil {
         {
             joinedString += strArray[i] + str;
         }
-        return joinedString.substring(0,joinedString.length() - 1);
+        return joinedString.substring(0,joinedString.length() - str.length());
     }
     public static String join(String [] strArray, char ch)
     {
