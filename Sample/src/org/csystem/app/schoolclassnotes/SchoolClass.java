@@ -30,7 +30,7 @@ public class SchoolClass {
     }
 
     public float getExamMean(int [] examNotes, int studentCount) {
-        return (float)ArrayUtil.sumOfArray(examNotes) / studentCount;
+        return (float)ArrayUtil.sum(examNotes) / studentCount;
     }
 
     public static SchoolClass getClassWithHighNote(SchoolClass [] schoolClasses)

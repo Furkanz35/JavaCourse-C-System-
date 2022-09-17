@@ -55,7 +55,7 @@ public class ExamSimulation {
         int totalGrades = 0;
 
         for(int i = 0; i < grades.length; ++i){
-            int total = ArrayUtil.sumOfArray(grades[i]);
+            int total = ArrayUtil.sum(grades[i]);
 
             averages[i] = (double)total / grades[i].length;
             totalGrades += total;
@@ -69,7 +69,7 @@ public class ExamSimulation {
         System.out.printf("%s dersi için not ortalamları : %n", lecturname );
         System.out.println("---------------------------------------------------");
         for (int i = 0; i < averages.length; ++i) {
-            System.out.printf("%d. şubenin not ortalması : %f%n", i + 1, averages[i]);
+            System.out.printf("%d. şubenin not ortalması : %.2f%n", i + 1, averages[i]);
         }
         System.out.println("----------------------------------------------------");
     }
@@ -79,7 +79,7 @@ public class ExamSimulation {
         System.out.println("##################################################################");
         printGrade();
         printAverages();
-        System.out.printf("Okul ortalaması : %f", average);
+        System.out.printf("Okul ortalaması : %.2f%n", average);
 
         System.out.println("##################################################################");
 

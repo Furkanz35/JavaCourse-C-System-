@@ -194,11 +194,11 @@ public class StringUtil {
     {
         String str = "";
 
-        for (int i = 0; i < s.length; ++i) {
-            if (removeEmpties && s[i].isBlank())
+        for (String value : s) {
+            if (removeEmpties && value.isBlank())
                 continue;
 
-            str += s[i] + delimiter;
+            str += value + delimiter;
         }
 
         return str.substring(0, str.length() - delimiter.length());
