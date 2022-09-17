@@ -1,268 +1,278 @@
 package org.csystem.util.array;
+
 import java.util.Random;
 
 public class ArrayUtil {
+    public static void bubbleSortAscending(int[] a) {
+        for (int i = 0; i < a.length - 1; ++i)
+            for (int k = 0; k < a.length - 1 - i; ++k)
+                if (a[k + 1] < a[k])
+                    swap(a, k, k + 1);
+    }
 
-    public static void fillRandomArray (Random r, int [] a, int min, int max)
-    {
-        for (int i = 0; i < a.length; ++i) {
-            a[i] = r.nextInt(min, max + 1);
+    public static void bubbleSortDescending(int[] a) {
+        for (int i = 0; i < a.length - 1; ++i)
+            for (int k = 0; k < a.length - 1 - i; ++k)
+                if (a[k] < a[k + 1])
+                    swap(a, k, k + 1);
+    }
+
+    public static void selectionSortAscending(int[] a) {
+        int min, minIndex;
+
+        for (int i = 0; i < a.length - 1; ++i) {
+            min = a[i];
+            minIndex = i;
+
+            for (int k = i + 1; k < a.length; ++k)
+                if (a[k] < min) {
+                    min = a[k];
+                    minIndex = k;
+                }
+
+            a[minIndex] = a[i];
+            a[i] = min;
         }
     }
 
-    public static int [] getRandomArray(Random r, int count, int min, int max) //[min, max]
+    public static void selectionSortDescending(int[] a) {
+        int max, maxIndex;
+
+        for (int i = 0; i < a.length - 1; ++i) {
+            max = a[i];
+            maxIndex = i;
+
+            for (int k = i + 1; k < a.length; ++k)
+                if (max < a[k]) {
+                    max = a[k];
+                    maxIndex = k;
+                }
+
+            a[maxIndex] = a[i];
+            a[i] = max;
+        }
+    }
+
+
+    public static void bubbleSort(int[] a) {
+        bubbleSort(a, false);
+    }
+
+    public static void bubbleSort(int[] a, boolean descending) {
+        if (descending)
+            bubbleSortDescending(a);
+        else
+            bubbleSortAscending(a);
+    }
+
+
+    public static void drawHistogram(int[] counts, int n, char ch) {
+        int maxVal = max(counts);
+
+        for (int i = 0; i < counts.length; ++i) {
+            int nChar = (int) Math.floor(counts[i] * (double) n / maxVal);
+
+            while (nChar-- > 0)
+                System.out.print(ch);
+
+            System.out.println();
+        }
+    }
+
+    public static void fillRandomArray(Random r, int[] a, int min, int max) //[min, max]
     {
-        int [] a = new int[count];
+        for (int i = 0; i < a.length; ++i)
+            a[i] = r.nextInt(min, max + 1);
+    }
+
+    public static int[] getHistogramData(int[] a, int n) {
+        int[] counts = new int[n + 1];
+
+        for (int i = 0; i < a.length; ++i)
+            ++counts[a[i]];
+
+        return counts;
+    }
+
+    public static int[] getRandomArray(Random r, int count, int min, int max) //[min, max]
+    {
+        int[] a = new int[count];
 
         fillRandomArray(r, a, min, max);
 
         return a;
     }
 
-    public static int findMax(int[] arr) {
-        int max = arr[0];
-        for(int i = 1; i < arr.length; ++i) {
-            if(arr[i] > max)
-                max = arr[i];
-        }
-        return  max;
-    }
-    public static void print(int n, int [] a)
+    public static int[][] getRandomMatrix(Random r, int m, int n, int min, int max) //[min, max]
     {
+        int[][] a = new int[m][];
+
+        for (int i = 0; i < m; ++i)
+            a[i] = getRandomArray(r, n, min, max);
+
+        return a;
+    }
+
+    public static int[][] getRandomSquareMatrix(Random r, int n, int min, int max) //[min, max]
+    {
+        return getRandomMatrix(r, n, n, min, max);
+    }
+
+    public static boolean isMatrix(int[][] a) {
+        for (int i = 1; i < a.length; ++i)
+            if (a[i].length != a[0].length)
+                return false;
+
+        return true;
+    }
+
+    public static boolean isSquareMatrix(int[][] a) {
+        return isMatrix(a) && a.length == a[0].length;
+    }
+
+    public static int[] join(int[] a, int[] b) {
+        int[] result = new int[a.length + b.length];
+
+        int idx = 0;
+
+        for (int i = 0; i < a.length; ++i)
+            result[idx++] = a[i];
+
+        for (int i = 0; i < b.length; ++i)
+            result[idx++] = b[i];
+
+        return result;
+    }
+
+    public static int max(int[] a) {
+        int result = a[0];
+
+        for (int i = 1; i < a.length; ++i)
+            result = Math.max(result, a[i]);
+
+        return result;
+    }
+
+    public static int min(int[] a) {
+        int result = a[0];
+
+        for (int i = 1; i < a.length; ++i)
+            result = Math.min(result, a[i]);
+
+        return result;
+    }
+
+    public static int partition(int[] a, int threshold) {
+        int partitionIndex = 0;
+
+        while (partitionIndex != a.length && a[partitionIndex] < threshold)
+            ++partitionIndex;
+
+        if (partitionIndex == a.length)
+            return partitionIndex;
+
+        for (int i = partitionIndex + 1; i < a.length; ++i)
+            if (a[i] < threshold)
+                swap(a, i, partitionIndex++);
+
+        return partitionIndex;
+    }
+
+    public static void print(int n, int[] a) {
         String fmt = String.format("%%0%dd ", n);
 
-        for (int val : a)
-            System.out.printf(fmt, val);
+        for (int i = 0; i < a.length; ++i)
+            System.out.printf(fmt, a[i]);
 
         System.out.println();
     }
 
-    public static void print(int [] a)
-    {
+    public static void print(int[] a) {
         print(1, a);
     }
 
-    public static void print(String [] s)
-    {
-        for (String str : s)
-            System.out.println(str);
+    public static void print(String[] s) {
+        for (int i = 0; i < s.length; ++i)
+            System.out.println(s[i]);
     }
 
-    public static void print(int [][] a)
-    {
+    public static void print(int[][] a) {
         print(1, a);
     }
 
-    public static void print(int n,  int [][] a)
-    {
-        for (int [] array : a)
-            print(n, array);
-    }
-
-    public static int [][] getRandomMatrix(Random r, int m, int n, int min, int max)
-    {
-        int [][] a = new int[m][];
-        for(int i = 0; i < m; ++i)
-           a[i] = getRandomArray(r, n, min, max);
-        return a;
-    }
-
-    public static int [][] getRandomSquareMatrix(Random r, int m, int min, int max)
-    {
-        return getRandomMatrix(r, m, m, min, max);
+    public static void print(int n, int[][] a) {
+        for (int i = 0; i < a.length; ++i)
+            print(n, a[i]);
     }
 
 
-
-    public static int[] getDigits (long val) {
-
-        int [] array = new int[getDigitCount(val)];
-        for ( int i = getDigitCount(val) - 1; i >= 0; --i) {
-            array[i] = (int)(val % 10);
-            val /= 10;
-        }
-        return  array;
+    public static void reverse(char[] a) {
+        for (int i = 0; i < a.length / 2; ++i)
+            swap(a, i, a.length - 1 - i);
     }
 
-    public static int getDigitCount(long val)
-    {
-        int count = 1;
-        while ( val / 10 != 0) {
-            val /= 10;
-            ++count;
-        }
-        return  count;
-    }
-    public static int[] join(int[] arr1, int[] arr2)
-    {
-        int [] arrJoin = new int[arr1.length + arr2.length];
-        for (int i = 0; i < arr1.length; ++i) {
-            arrJoin[i] = arr1[i];
-        }
-        for (int i = arr1.length; i < arr1.length + arr2.length; ++i) {
-            arrJoin[i] = arr2[i - arr1.length];
-        }
-        return arrJoin;
+    public static void reverse(int[] a) {
+        for (int i = 0; i < a.length / 2; ++i)
+            swap(a, i, a.length - 1 - i);
     }
 
-    public static void swap(int[] arr, int i, int k)
-    {
-        int temp = arr[k];
-        arr[k] = arr[i];
-        arr[i] = temp;
+    public static void selectionSort(int[] a) {
+        selectionSort(a, false);
     }
 
-    private static int[] bubleSortAscending(int[] a)
-    {
-        for(int i = 0; i < a.length - 1; i++) {
-            for(int k = 0; k < a.length - i -1 ; ++k)
-                if(a[k] > a[k + 1])
-                    swap(a, k, k + 1);
-        }
-
-        return a;
-    }
-    private static int[] bubleSortDescending(int[] a)
-    {
-        for(int i = 0; i < a.length - 1; i++) {
-            for(int k = 0; k < a.length - i - 1; ++k)
-                if(a[k] < a[k + 1])
-                    swap(a, k, k + 1);
-        }
-
-        return a;
-    }
-    public static int[] bubleSort(int[] arr, boolean Descending)
-    {
-        if (Descending == false)
-            return bubleSortAscending(arr);
-
-        return bubleSortDescending(arr);
-
-    }
-    public static int[] bubleSort(int[] arr)
-    {
-        return  bubleSort(arr, false);
+    public static void selectionSort(int[] a, boolean descending) {
+        if (descending)
+            selectionSortDescending(a);
+        else
+            selectionSortAscending(a);
     }
 
+    public static int sum(int[] a) {
+        int total = 0;
 
+        for (int i = 0; i < a.length; ++i)
+            total += a[i];
 
-
-    private static int[] selectionSortDescending(int[] arr)
-    {   int max;
-        int maxIndex;
-        for(int i = 0; i < arr.length; ++i) {
-            max = arr[i];
-            maxIndex = i;
-            for(int k = i + 1; k < arr.length; ++k) {
-                if(arr[k] > max) {
-                    max = arr[k];
-                    maxIndex = k;
-                }
-
-            }
-            swap(arr, i, maxIndex);
-        }
-        return arr;
+        return total;
     }
 
-    private static int[] selectionSortAscending(int[] arr)
-    {
-        int min;
-        int minIndex;
-        for(int i = 0; i < arr.length; ++i) {
-            min = arr[i];
-            minIndex = i;
-            for(int k = i + 1; k < arr.length; ++k) {
-                if(arr[k] < min) {
-                    min = arr[k];
-                    minIndex = k;
-                }
+    public static int sum(int[][] a) {
+        int total = 0;
 
-            }
-            swap(arr, i, minIndex);
-        }
-        return arr;
+        for (int i = 0; i < a.length; ++i)
+            total += sum(a[i]);
+
+        return total;
     }
 
-    public static int[] selectionSort(int[] arr, boolean descending)
-    {
-        if(descending == true)
-            return selectionSortDescending(arr);
-        return selectionSortAscending(arr);
+    public static int sumDiagonal(int[][] a) {
+        int total = 0;
 
+        for (int i = 0; i < a.length; ++i)
+            total += a[i][i];
+
+        return total;
     }
 
-    public static int partition(int [] arr, int threshold)
-    {
-        int partitionIndex = 0;
-        while (partitionIndex != arr.length && arr[partitionIndex] < threshold){
-            ++partitionIndex;
-        }
-
-        if(partitionIndex == arr.length)
-            return  partitionIndex;
-
-        for(int i = partitionIndex + 1; i < arr.length; ++i) {
-            if(arr[i] < threshold)
-                swap(arr, partitionIndex++, i);
-        }
-        return partitionIndex;
+    public static void swap(char[] a, int i, int k) {
+        char temp = a[i];
+        a[i] = a[k];
+        a[k] = temp;
     }
 
-    public static int[] getHistogramData(int[] arr, int n) {
-        int[] histogramArr = new int[n+1];
-        for(int i = 0; i < arr.length; ++i){
-            ++histogramArr[arr[i]];
-        }
-        return histogramArr;
-    }
-    public static int[] getHistogramData(int[] arr) {
-        return getHistogramData(arr,findMax(arr) );
+    public static void swap(int[] a, int i, int k) {
+        int temp = a[i];
+        a[i] = a[k];
+        a[k] = temp;
     }
 
-    public static boolean isMatrix(int [][] a) {
-        int columnCount = a[0].length;
-        for(int i = 0; i < a.length; ++i){
-            if ( a[i].length != columnCount)
-                return false;
-        }
-        return true;
+    public static int[][] transpose(int[][] a) {
+        int[][] result = new int[a[0].length][a.length];
 
-    }
-    public static boolean isSquareMatrix(int [][] a)
-    {
-        return !isMatrix(a) ? false : (a.length == a[0].length ?  true : false);
-    }
+        for (int i = 0; i < a.length; ++i)
+            for (int j = 0; j < a[i].length; ++j)
+                result[j][i] = a[i][j];
 
-    public static int sumDioganal(int [][] a)
-    {
-        int result = 0;
-
-        for(int i = 0; i < a.length; ++i) {
-
-            result += a[i][i];
-
-        }
         return result;
     }
-
-    public static int sumOfArray(int [] arr)
-    {
-        int result = 0;
-        for (int i = 0; i < arr.length; ++i)
-            result += arr[i];
-        return result;
-    }
-
-    public static int sumOfArray(int [][] arr)
-    {
-        int result = 0;
-        for (int i = 0; i < arr.length; ++i)
-            result += sumOfArray(arr[i]);
-        return result;
-    }
-
-
-
 }
