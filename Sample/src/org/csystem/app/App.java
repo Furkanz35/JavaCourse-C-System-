@@ -1,28 +1,31 @@
 package org.csystem.app;
 
-import java.sql.SQLOutput;
-import java.util.Random;
-import java.util.Scanner;
-
-import org.csystem.app.commandprompt.CommandPromptApp;
-import org.csystem.app.simulation.ExamSimulationApp;
-import org.csystem.util.array.ArrayUtil;
-import org.csystem.util.math.geometry.Circle;
+import org.csystem.util.math.geometry.Point;
 
 
 class App {
     public static void main(String [] args)
     {
-        Circle c = new Circle(-2);
-        System.out.printf("Radius: %.2f%n", c.getRadius());
-        System.out.printf("Area: %.2f%n", c.getArea());
-        System.out.printf("Circumference: %.2f%n", c.getCircumference());
-        System.out.println("-------------------");
 
-        c.setRadius(4.5);
-        System.out.printf("Radius: %.2f%n", c.getRadius());
-        System.out.printf("Area: %.2f%n", c.getArea());
-        System.out.printf("Circumference: %.2f%n", c.getCircumference());
+    }
+    public class Line {
 
+        private Point m_p1;
+        private Point m_p2;
+
+        public Line(int x1,int y1, int x2, int y2)
+        {
+            m_p1 = new Point(x1, y1);
+            m_p2 = new Point(x2, y2);
+
+        }
+
+        public Point getPoint1(){
+            return  m_p1;
+        }
+
+        public Point getPoint2(){
+            return  m_p2;
+        }
     }
 }

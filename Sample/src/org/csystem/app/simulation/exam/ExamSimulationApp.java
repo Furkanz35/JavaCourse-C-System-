@@ -1,4 +1,6 @@
-package org.csystem.app.simulation;
+package org.csystem.app.simulation.exam;
+
+import org.csystem.app.simulation.exam.ExamSimulation;
 
 public class ExamSimulationApp {
  public static void run(){

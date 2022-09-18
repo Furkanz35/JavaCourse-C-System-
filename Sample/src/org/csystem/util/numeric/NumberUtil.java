@@ -6,10 +6,13 @@ import static java.lang.Math.log10;
 import static java.lang.Math.pow;
 
 public class NumberUtil {
-    public static String [] ones = {"", "bir", "iki", "üç", "dört", "beş", "altı", "yedi", "sekiz", "dokuz"};
-    public static String [] tens = {"", "on", "yirmi", "otuz", "kırk", "elli", "altmış", "yetmiş", "seksen", "doksan"};
+    private NumberUtil(){
 
-    public static int [] getDigits(long a, int n)
+    }
+    private static String [] ones = {"", "bir", "iki", "üç", "dört", "beş", "altı", "yedi", "sekiz", "dokuz"};
+    private static String [] tens = {"", "on", "yirmi", "otuz", "kırk", "elli", "altmış", "yetmiş", "seksen", "doksan"};
+
+    private static int [] getDigits(long a, int n)
     {
         a = Math.abs(a);
         int [] result = new int[a == 0 ? 1 : (int)(log10(a) / n) + 1];
@@ -21,7 +24,7 @@ public class NumberUtil {
         return result;
     }
 
-    public static String numToText3DigitsTR(String str, int val)
+    private static String numToText3DigitsTR(String str, int val)
     {
         int a = val / 100;
         int b = val / 10 % 10;

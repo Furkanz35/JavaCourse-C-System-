@@ -5,6 +5,10 @@ import org.csystem.util.array.ArrayUtil;
 import java.util.Random;
 
 public class StringUtil {
+    private StringUtil()
+    {
+
+    }
     public static String capitalizeWS(String s)
     {
         int i;

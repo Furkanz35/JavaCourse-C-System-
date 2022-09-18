@@ -3,9 +3,9 @@ package org.csystem.app.lottery;
 import java.util.Random;
 
 public class NumericLottery {
-    public Random random;
+    private Random random;
 
-    public static int [] getNumbers(boolean [] flags)
+    private static int [] getNumbers(boolean [] flags)
     {
         int [] numbers = new int[6];
 
@@ -18,7 +18,7 @@ public class NumericLottery {
         return numbers;
     }
 
-    public boolean [] getFlags()
+    private boolean [] getFlags()
     {
         boolean [] flags = new boolean[50];
 
