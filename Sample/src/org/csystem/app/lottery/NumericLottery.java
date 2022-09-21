@@ -3,7 +3,7 @@ package org.csystem.app.lottery;
 import java.util.Random;
 
 public class NumericLottery {
-    private Random random;
+    private final Random random;
 
     private static int [] getNumbers(boolean [] flags)
     {
