@@ -1,22 +1,29 @@
 
 package org.csystem.util.math.geometry;
 
-public class Point {
-    private final int m_x;
-    private final int m_y;
+public class MutablePoint {
 
-    public Point() {
-        m_x = m_y = 0;
+    private  int m_x;
+    private  int m_y;
+
+    private MutablePoint() {
     }
 
-    public Point(int x) {
+    public MutablePoint(int x) {
         this.m_x = x;
-        m_y = 0;
     }
 
-    public Point(int x, int y) {
+    public MutablePoint(int x, int y) {
         this.m_x = x;
         this.m_y = y;
+    }
+
+    public void setX(int m_x) {
+        this.m_x = m_x;
+    }
+
+    public void setY(int m_y) {
+        this.m_y = m_y;
     }
 
     public int getX() {
@@ -31,23 +38,27 @@ public class Point {
         return this.distance(0, 0);
     }
 
-    public double distance(Point other) {
+    public double distance(MutablePoint other) {
         return this.distance(other.m_x, other.m_y);
     }
 
-    public Point offset(int dx, int dy){
-       return new Point(m_x + dx, m_y + dy);
+    public void offset(int dx, int dy){
+        m_x += dx;
+        m_x += dy;
     }
+
     public double distance(int x, int y) {
         return PointCommonUtil.distance(m_x, m_y, x, y);
     }
+
+
 
     public String toString() {
         return PointCommonUtil.toString(m_x, m_y);
     }
 
-    public MutablePoint toMutablePoint()
+    public Point toPoint()
     {
-        return new MutablePoint(m_x, m_y);
+        return new Point(m_x, m_y);
     }
 }

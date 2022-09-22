@@ -76,6 +76,6 @@ public class IntValue {
     {
         return m_value - other.m_value;
     }
-    
+
 
 }
