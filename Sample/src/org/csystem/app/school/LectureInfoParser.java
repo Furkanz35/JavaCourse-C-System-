@@ -1,27 +1,40 @@
 package org.csystem.app.school;
-import static org.csystem.app.datetime.DateUtil.getDateStrTR;
+
+import org.csystem.util.datetime.Date;
 
 public class LectureInfoParser {
-    public LectureInfo lectureInfo;
+    private final LectureInfo m_lectureInfo;
 
-    public  LectureInfoParser(String str)
+    private static Date getDate(String str)
     {
+        String [] dateInfo = str.split("[/]");
 
+        int day = Integer.parseInt(dateInfo[0]);
+        int month = Integer.parseInt(dateInfo[1]);
+        int year = Integer.parseInt(dateInfo[2]);
 
-        String [] lectureInfoStr = str.split("[:]+");
-        lectureInfo = new LectureInfo();
-        lectureInfo.studentName = lectureInfoStr[0];
-        lectureInfo.lectureName = lectureInfoStr[1];
-        lectureInfo.midtermDate = getDateStr(lectureInfoStr[2]);
-        lectureInfo.finalDate = getDateStr(lectureInfoStr[3]);
-        lectureInfo.midtermGrade = Integer.parseInt(lectureInfoStr[4]);
-        lectureInfo.finalGrade = Integer.parseInt(lectureInfoStr[5]);
+        return new Date(day, month, year);
     }
 
-    public static String getDateStr(String date)
+    public LectureInfoParser(String str)
     {
-        String [] dateStr = date.split("[/]");
-        return getDateStrTR(Integer.parseInt(dateStr[0]), Integer.parseInt(dateStr[1]), Integer.parseInt(dateStr[2]) );
+        //...
 
+        String [] lectureInfoStr = str.split("[:]+");
+
+        //...
+
+        m_lectureInfo = new LectureInfo();
+        m_lectureInfo.setStudentName(lectureInfoStr[0]);
+        m_lectureInfo.setLectureName(lectureInfoStr[1]);
+        m_lectureInfo.setMidtermDate(getDate(lectureInfoStr[2]));
+        m_lectureInfo.setFinalDate(getDate(lectureInfoStr[3]));
+        m_lectureInfo.setMidtermGrade(Integer.parseInt(lectureInfoStr[4]));
+        m_lectureInfo.setFinalGrade(Integer.parseInt(lectureInfoStr[5]));
+    }
+
+    public LectureInfo getLectureInfo()
+    {
+        return m_lectureInfo;
     }
 }
