@@ -12,6 +12,7 @@ public class Time {
         m_hour = now.getHour();
         m_minute = now.getMinute();
         m_second = now.getSecond();
+        m_millisecond = now.getNano() / 1_000_000;
     }
 
 

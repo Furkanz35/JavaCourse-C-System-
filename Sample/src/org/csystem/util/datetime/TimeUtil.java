@@ -9,8 +9,7 @@ public class TimeUtil {
 
     public static Time randomTime(Random r)
     {
-        //TODO:
-        return new Time();
+        return new Time(r.nextInt(24), r.nextInt(60), r.nextInt(60), r.nextInt(1000));
     }
 
     public static Time randomTime()
