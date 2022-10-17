@@ -38,9 +38,62 @@ public class MutableFraction {
 
     public MutableFraction(int a, int b)
     {
+        check(a, b);
+        set(a, b);
+    }
+
+    private static void doWorkForException(String message) {
+
+        System.out.println(message);
+        System.exit(1);
+
+    }
+
+    private static void check(int a, int b) {
+        if (b == 0) {
+            if (a == 0)
+                doWorkForException("Indeterminate");
+            else
+                doWorkForException("Undefined");
+        }
+    }
+
+    private void configureSigned() {
+        if(m_b < 0) {
+            m_a = -m_a;
+            m_b = -m_b;
+        }
+    }
+
+    private void simplfy() {
+        int min = Math.min(Math.abs(m_a), m_b);
+
+        for(int i = min; i > 1; --i) {
+
+            if( m_a % i == 0 && m_b % i == 0) {
+                m_a /= i;
+                m_b /= i;
+                break;
+            }
+
+        }
+    }
+
+
+    private void set(int a, int b){
+
+        if(a == 0) {
+            m_a = 0;
+            m_b = 1;
+            return;
+        }
         m_a = a;
         m_b = b;
+
+        configureSigned();
+        simplfy();
     }
+
 
     public int getNumerator()
     {
@@ -50,7 +103,10 @@ public class MutableFraction {
 
     public void setNumerator(int value)
     {
-        //TODO:
+        if(value == m_a)
+            return;
+
+        set(value, m_b);
     }
 
     public int getDenominator()
@@ -61,7 +117,15 @@ public class MutableFraction {
 
     public void setDenominator(int value)
     {
-        //TODO:
+        if(value == m_b)
+            return;
+        check( m_a, value);
+        set( m_a, value);
+
+    }
+
+    public double getRealValue(){
+        return (double)m_a / m_b;
     }
 
     public static MutableFraction add(int value, MutableFraction fraction)
@@ -71,86 +135,81 @@ public class MutableFraction {
         return new MutableFraction();
     }
 
+    private static MutableFraction add(int a1, int b1, int a2, int b2) {
+
+        return new MutableFraction(a1 * b2 + a2 * b1, b1 * b2);
+
+    }
+
+    private static MutableFraction substract(int a1, int b1, int a2, int b2){
+        return add(a1, b1, -a2, b2);
+    }
+
+    private static MutableFraction multiply(int a1, int b1, int a2, int b2) {
+        return new MutableFraction( a1 * a2 , b1 * b2);
+    }
+
+    private static MutableFraction divide(int a1, int b1, int a2, int b2) {
+        return multiply(a1, b1 , b2, a2);
+    }
+
     public MutableFraction add(MutableFraction other)
     {
-        //TODO:
-
-        return new MutableFraction();
+        return add(m_a, m_b, other.m_a, other.m_b);
     }
 
     public MutableFraction add(int value)
     {
-        //TODO:
-
-        return new MutableFraction();
+        return add(m_a, m_b, value, 1);
     }
 
     public static MutableFraction subtract(int value, MutableFraction fraction)
     {
-        //TODO:
-
-        return new MutableFraction();
+        return substract(value, 1, fraction.m_a, fraction.m_b);
     }
 
     public MutableFraction subtract(MutableFraction other)
     {
-        //TODO:
-
-        return new MutableFraction();
+        return substract(m_a, m_b, other.m_a, other.m_b);
     }
 
     public MutableFraction subtract(int value)
     {
-        //TODO:
-
-        return new MutableFraction();
+        return substract(m_a, m_b, value, 1 );
     }
 
     public static MutableFraction multiply(int value, MutableFraction fraction)
     {
-        //TODO:
-
-        return new MutableFraction();
+        return multiply(value, 1, fraction.m_a, fraction.m_b);
     }
 
     public MutableFraction multiply(MutableFraction other)
     {
-        //TODO:
-
-        return new MutableFraction();
+        return multiply(m_a, m_b, other.m_a, other.m_b);
     }
 
     public MutableFraction multiply(int value)
     {
-        //TODO:
-
-        return new MutableFraction();
+        return multiply(m_a, m_b, value, 1);
     }
-
-    public static MutableFraction divide(int value, MutableFraction fraction)
+     public static MutableFraction divide(int value, MutableFraction fraction)
     {
-        //TODO:
-
-        return new MutableFraction();
+        return divide(value, 1, fraction.m_a, fraction.m_b);
     }
 
     public MutableFraction divide(MutableFraction other)
     {
-        //TODO:
-
-        return new MutableFraction();
+        return divide(m_a, m_b, other.m_a, other.m_b);
     }
 
     public MutableFraction divide(int value)
     {
-        //TODO:
-
-        return new MutableFraction();
+        return divide(m_a, m_b, value, 1);
     }
 
     public void inc(int value)
     {
-        //TODO:
+        m_a += value * m_b ;
     }
 
     public void inc()
@@ -170,7 +229,6 @@ public class MutableFraction {
 
     public String toString()
     {
-        //TODO:
-        return "10 / 3 = 3.333333";
+        return String.format("%d%s", m_a, m_b == 1 ? "" : (" / " + m_b) + " = " + getRealValue());
     }
 }
