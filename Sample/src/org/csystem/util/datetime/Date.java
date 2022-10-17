@@ -19,7 +19,7 @@ public class Date {
         int totalDays = day;
 
         for (int m = month - 1; m >= 1; --m)
-            totalDays += DateUtil.getDays(m, year);
+            totalDays += DateUtil.MONTHS[m - 1].getDays(year);
 
         return totalDays;
     }
@@ -29,7 +29,7 @@ public class Date {
         int totalDays = getDayOfYear(day, month, year);
 
         for (int y = 1900; y < year; ++y)
-            totalDays += DateUtil.isLeapYear(y) ? 366 : 365;
+            totalDays += Month.isLeapYear(y) ? 366 : 365;
 
         return totalDays % 7;
     }
@@ -46,7 +46,7 @@ public class Date {
 
     private static boolean isValidDate(int day, int month, int year)
     {
-        return  1 <= day && day <= 31 && 1 <= month && month <= 12 && day <= DateUtil.getDays(month, year);
+        return  1 <= day && day <= 31 && 1 <= month && month <= 12 && day <= DateUtil.MONTHS[month - 1].getDays(year);
     }
 
     private static void doWorkForException(String message)
@@ -99,6 +99,12 @@ public class Date {
         checkDate(day, month, year, String.format("Invalid date value(s) -> day: %d, month value: %d, year: %d", day, month, year));
         set(day, month, year);
     }
+    public Date(int day, Month month, int year)
+    {
+        checkDate(day, month.ordinal() + 1, year, String.format("Invalid date value(s) -> day: %d, year: %d", day, year));
+        set(day, month.ordinal() + 1, year);
+    }
+
 
     public int getDay()
     {
@@ -107,6 +113,8 @@ public class Date {
 
     public void setDay(int day)
     {
+        if(day == m_day)
+            return;
         checkDay(day, "Invalid day value:" + day);
         set(day, m_month, m_year);
     }
@@ -116,8 +124,20 @@ public class Date {
         return m_month;
     }
 
+    public Month getMounth()
+    {
+        return DateUtil.MONTHS[m_month - 1];
+    }
+
+    public void setMonth(Month month)
+    {
+        setMonthValue(month.ordinal() + 1);
+    }
+
     public void setMonthValue(int month)
     {
+        if(m_month == month)
+            return;
         checkMonth(month, "Invalid month value:" + month);
         set(m_day, month, m_year);
     }
@@ -129,13 +149,15 @@ public class Date {
 
     public void setYear(int year)
     {
+        if(year == m_year)
+            return;
         checkYear(year, "Invalid year value:" + year);
         set(m_day, m_month, year);
     }
 
-    public int getDayOfWeekValue()
+    public DayOfWeek getDayOfWeekValue()
     {
-        return m_dayOfWeek;
+        return DateUtil.DAY_OF_WEEKS[m_dayOfWeek];
     }
 
     public String getDayOfWeekTR()
@@ -150,7 +172,7 @@ public class Date {
 
     public boolean isLeapYear()
     {
-        return DateUtil.isLeapYear(m_year);
+        return Month.isLeapYear(m_year);
     }
 
     public boolean isWeekend()
