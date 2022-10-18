@@ -124,7 +124,7 @@ public class Date {
         return m_month;
     }
 
-    public Month getMounth()
+    public Month getMonth()
     {
         return DateUtil.MONTHS[m_month - 1];
     }
@@ -155,7 +155,7 @@ public class Date {
         set(m_day, m_month, year);
     }
 
-    public DayOfWeek getDayOfWeekValue()
+    public DayOfWeek getDayOfWeek()
     {
         return DateUtil.DAY_OF_WEEKS[m_dayOfWeek];
     }
